@@ -1,8 +1,16 @@
 import os
-os.system("python duckdb_run.py")
-import streamlit as st
-import sys
-import os
+import subprocess
+
+# 1. 强行把当前运行环境的目录，切换到项目的绝对根目录下
+base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+os.chdir(base_dir)
+
+# 2. 检查如果数据库文件不存在，则强制触发数据初始化
+db_path = os.path.join(base_dir, "app", "data", "predictions.db") # 或者项目的db名
+if not os.path.exists(db_path):
+    # 使用绝对路径强制执行初始化脚本
+    script_path = os.path.join(base_dir, "duckdb_run.py")
+    subprocess.run(["python", script_path], check=True)
 
 # Add app directory to path for local imports
 sys.path.insert(0, os.path.dirname(__file__))
