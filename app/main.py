@@ -1,3 +1,5 @@
+import os
+os.system("python duckdb_run.py")
 import streamlit as st
 import sys
 import os
